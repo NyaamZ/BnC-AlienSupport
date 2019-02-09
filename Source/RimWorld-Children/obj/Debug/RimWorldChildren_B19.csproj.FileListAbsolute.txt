@@ -1,0 +1,12 @@
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\Assemblies\RimWorldChildren.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ChildrenAndPregnancy-master\Source\RimWorld-Children\obj\Debug\RimWorldChildren_B19.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ChildrenAndPregnancy-master\Source\RimWorld-Children\obj\Debug\RimWorldChildren.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ChildrenAndPregnancy-master\Source\RimWorld-Children\obj\Debug\RimWorldChildren_B19.csprojAssemblyReference.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CnP\Assemblies\RimWorldChildren.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CnP\Source\RimWorld-Children\obj\Debug\RimWorldChildren_B19.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CnP\Source\RimWorld-Children\obj\Debug\RimWorldChildren.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CnP\Source\RimWorld-Children\obj\Debug\RimWorldChildren_B19.csprojAssemblyReference.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC\Assemblies\RimWorldChildren.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC\Source\RimWorld-Children\obj\Debug\RimWorldChildren_B19.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC\Source\RimWorld-Children\obj\Debug\RimWorldChildren.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC\Source\RimWorld-Children\obj\Debug\RimWorldChildren_B19.csprojAssemblyReference.cache
