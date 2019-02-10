@@ -4,12 +4,12 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle ("RimWorld-Children")]
+[assembly: AssemblyTitle ("BnC_AlienSupport")]
 [assembly: AssemblyDescription ("")]
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("")]
 [assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright ("thirite, NyammZ")]
+[assembly: AssemblyCopyright ("NyammZ")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 

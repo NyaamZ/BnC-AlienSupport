@@ -141,16 +141,19 @@ namespace BnC_Alien_Support
             return false;
          }
 
-        // change head Scale for alien race child
+        //// change head Scale for alien race child
         public static void AlienChildHeadMatAt(PawnGraphicSet __instance, ref Material __result)
         {
             Pawn pawn = __instance.pawn;
-            if (pawn.ageTracker.CurLifeStageIndex == RimWorldChildren.AgeStage.Child && !RimWorldChildren.ChildrenUtility.HasHumanlikeHead(pawn))
+            bool isagechild = pawn.ageTracker.CurLifeStageIndex == 2;
+            bool ishumanlikeHead = pawn.def.defName == "Human" || pawn.def.defName == "Ratkin";
+            if (pawn.RaceProps.Humanlike && isagechild && !ishumanlikeHead)
             {
-                const float CHeadTextureScaleX = 1.225f;     // CnP_Settings.option_debug_scale_X;
-                const float CHeadTextureScaleY = 1.225f;    // CnP_Settings.option_debug_scale_Y;
-                const float CHeadTextureOffsetX = -0.11f;  // CnP_Settings.option_debug_offset_X;
-                const float CHeadTextureOffsetY = -0.1f;   //CnP_Settings.option_debug_offset_Y; 
+                const float CHeadTextureScaleX = 1.225f;     // BnC_Settings.option_debug_scale_X;
+                const float CHeadTextureScaleY = 1.225f;    // BnC_Settings.option_debug_scale_Y;
+                const float CHeadTextureOffsetX = -0.105f;  // BnC_Settings.option_debug_offset_X;
+                const float CHeadTextureOffsetY = -0.10f;   // BnC_Settings.option_debug_offset_Y; 
+
 
                 __result.mainTextureScale = new Vector2(CHeadTextureScaleX, CHeadTextureScaleY);
                 __result.mainTextureOffset = new Vector2(CHeadTextureOffsetX, CHeadTextureOffsetY);
@@ -165,12 +168,12 @@ namespace BnC_Alien_Support
 
             foreach (ThingDef_AlienRace ar in DefDatabase<ThingDef_AlienRace>.AllDefs)
             {
-                if ( ar!=null && RimWorldChildren.ChildrenUtility.SupportAlienRaces.Contains(ar.defName))
+                if ( ar!=null && ChildrenUtility.SupportAlienRaces.Contains(ar.defName))
                 {
                     //Log.Message("[From BnC ALSupport] " + ar.defName);
                     st = st + ar.defName + ", ";
                     CurrentAliensdef.Add(ar);
-                    RimWorldChildren.ChildrenUtility.CurrentAlienRaces.Add(ar.defName);
+                    ChildrenUtility.CurrentAlienRaces.Add(ar.defName);
                     //set max lifeExpectancy = 400
                     if (ar.race.lifeExpectancy > Max_lifeExpectancy) ar.race.lifeExpectancy = Max_lifeExpectancy;
                 }
