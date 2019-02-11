@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Dragonian Race</li>
+    </mods>
+    <match Class="PatchOperationReplace">
+      <xpath>/Defs/LifeStageDef[defName = "DragonianlikeChild"]/milkable</xpath>
+      <value>
+        <milkable>false</milkable>
+      </value>
+    </match>
+  </Operation>
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Dragonian RimjobEdtion</li>
+    </mods>
+    <match Class="PatchOperationReplace">
+      <xpath>/Defs/LifeStageDef[defName = "DragonianlikeChild"]/milkable</xpath>
+      <value>
+        <milkable>false</milkable>
+      </value>
+    </match>
+  </Operation>
+</Patch>

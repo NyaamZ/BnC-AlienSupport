@@ -5,6 +5,7 @@ using AlienRace;
 using Harmony;
 using UnityEngine;
 using Verse;
+using RimWorld;
 using RimWorldChildren;
 
 namespace BnC_Alien_Support
@@ -27,6 +28,18 @@ namespace BnC_Alien_Support
                     typeof(PawnGraphicSet),
                     nameof(PawnGraphicSet.HeadMatAt)), null,
                 new HarmonyMethod(typeof(AlienRace_Patches), nameof(AlienRace_Patches.AlienChildHeadMatAt)));
+
+            harmony.Patch(
+                AccessTools.Method(
+                    typeof(Children_Drawing),
+                    nameof(Children_Drawing.ModifyChildBodyType)), null,
+                new HarmonyMethod(typeof(AlienRace_Patches), nameof(AlienRace_Patches.ModifyChildBodyTypePostfix)));
+
+            //harmony.Patch(
+            //    AccessTools.Method(
+            //        typeof(PawnGraphicSet),
+            //        nameof(PawnGraphicSet.MatsBodyBaseAt)), null,
+            //    new HarmonyMethod(typeof(AlienRace_Patches), nameof(AlienRace_Patches.AlienChildMatsBodyBaseAt)));
 
             AlienRace_Patches.ChangeAliensProperty();
 
@@ -145,26 +158,70 @@ namespace BnC_Alien_Support
         public static void AlienChildHeadMatAt(PawnGraphicSet __instance, ref Material __result)
         {
             Pawn pawn = __instance.pawn;
-            bool isagechild = pawn.ageTracker.CurLifeStageIndex == 2;
-            bool ishumanlikeHead = pawn.def.defName == "Human" || pawn.def.defName == "Ratkin";
-            if (pawn.RaceProps.Humanlike && isagechild && !ishumanlikeHead)
+            bool isAgechild = pawn.ageTracker.CurLifeStageIndex == 2;
+            bool isHumanlikeHead = pawn.def.defName == "Human" || pawn.def.defName == "Ratkin";
+            if (pawn.RaceProps.Humanlike && isAgechild && !isHumanlikeHead)
             {
                 const float CHeadTextureScaleX = 1.225f;     // BnC_Settings.option_debug_scale_X;
                 const float CHeadTextureScaleY = 1.225f;    // BnC_Settings.option_debug_scale_Y;
                 const float CHeadTextureOffsetX = -0.105f;  // BnC_Settings.option_debug_offset_X;
                 const float CHeadTextureOffsetY = -0.10f;   // BnC_Settings.option_debug_offset_Y; 
 
-
-                __result.mainTextureScale = new Vector2(CHeadTextureScaleX, CHeadTextureScaleY);
-                __result.mainTextureOffset = new Vector2(CHeadTextureOffsetX, CHeadTextureOffsetY);
+                Material xMat = new Material(__result);
+                xMat.mainTextureScale = new Vector2(CHeadTextureScaleX, CHeadTextureScaleY);
+                xMat.mainTextureOffset = new Vector2(CHeadTextureOffsetX, CHeadTextureOffsetY);
+                __result = xMat;
             }
         }
+
+        // if alien race bodytype has thin > skip, else give random bodytype 
+        public static void ModifyChildBodyTypePostfix(Pawn pawn, ref BodyTypeDef __result)
+        {
+            bool IsAgechild = pawn.ageTracker.CurLifeStageIndex == 2;            
+            if (IsAgechild)
+            {
+                if (pawn.def is ThingDef_AlienRace alienProps && !alienProps.alienRace.generalSettings.alienPartGenerator.alienbodytypes.NullOrEmpty() &&
+                !alienProps.alienRace.generalSettings.alienPartGenerator.alienbodytypes.Contains(item: BodyTypeDefOf.Thin))
+                {
+                    __result = alienProps.alienRace.generalSettings.alienPartGenerator.alienbodytypes.RandomElement();
+                }
+            }            
+        }
+
+        ////// change Body Scale for alien race child
+        //public static void AlienChildMatsBodyBaseAt(PawnGraphicSet __instance, ref List<Material> __result)
+        //{
+        //    Pawn pawn = __instance.pawn;
+        //    bool isAgechild = pawn.ageTracker.CurLifeStageIndex == 2;
+        //    bool isHumanlikeHead = pawn.def.defName == "Human" || pawn.def.defName == "Ratkin";
+        //    if (pawn.RaceProps.Humanlike && isAgechild && !isHumanlikeHead)
+        //    {
+        //        //const float CBodyTextureScaleX = 1.06f;     // BnC_Settings.option_debug_scale_X;
+        //        //const float CBodyTextureScaleY = 1.225f;    // BnC_Settings.option_debug_scale_Y;
+        //        //const float CBodyTextureOffsetX = -0.024f;  // BnC_Settings.option_debug_offset_X;
+        //        //const float CBodyTextureOffsetY = -0.2f;   // BnC_Settings.option_debug_offset_Y; 
+
+        //        float CBodyTextureScaleX = BnC_Settings.option_debug_scale_X;
+        //        float CBodyTextureScaleY = BnC_Settings.option_debug_scale_Y;
+        //        float CBodyTextureOffsetX = BnC_Settings.option_debug_offset_X;
+        //        float CBodyTextureOffsetY = BnC_Settings.option_debug_offset_Y; 
+
+        //        Material xMat = new Material(__result[0]);
+        //        xMat.mainTextureScale = new Vector2(CBodyTextureScaleX, CBodyTextureScaleY);
+        //        xMat.mainTextureOffset = new Vector2(CBodyTextureOffsetX, CBodyTextureOffsetY);
+        //        __result[0] = xMat;
+        //    }
+        //}
 
         public static void ChangeAliensProperty()
         {
             List<ThingDef_AlienRace> CurrentAliensdef = new List<ThingDef_AlienRace>();
             string st = "";
-            const float Max_lifeExpectancy = 400f;
+            const float Max_lifeExpectancy = 355f;
+            ThingDef babycloth = DefDatabase<ThingDef>.GetNamed("Apparel_Baby_Onesie");
+            ThingDef babyhat = DefDatabase<ThingDef>.GetNamed("Apparel_Baby_Beanie");
+            RaceRestrictionSettings.apparelWhiteDict.Add(key: babycloth, value: new List<ThingDef_AlienRace>());
+            RaceRestrictionSettings.apparelWhiteDict.Add(key: babyhat, value: new List<ThingDef_AlienRace>());
 
             foreach (ThingDef_AlienRace ar in DefDatabase<ThingDef_AlienRace>.AllDefs)
             {
@@ -174,18 +231,20 @@ namespace BnC_Alien_Support
                     st = st + ar.defName + ", ";
                     CurrentAliensdef.Add(ar);
                     ChildrenUtility.CurrentAlienRaces.Add(ar.defName);
-                    //set max lifeExpectancy = 400
+                    //set max lifeExpectancy
                     if (ar.race.lifeExpectancy > Max_lifeExpectancy) ar.race.lifeExpectancy = Max_lifeExpectancy;
+                    RaceRestrictionSettings.apparelWhiteDict[key: babycloth].Add(item: ar);
+                    RaceRestrictionSettings.apparelWhiteDict[key: babyhat].Add(item: ar);
                 }
             }
 
             if (CurrentAliensdef.Count == 0)
             {
-                Log.Message("[From BnC ALSupport] CurrentAliens is null");
+                Log.Message("[From BnC ArSupport] CurrentAliens is null");
                 return;
             }
             
-            Log.Message("[From BnC ALSupport] Using alien races now : " + st);
+            Log.Message("[From BnC ArSupport] Using alien races now : " + st);
             ChangeStageAgesCurve(CurrentAliensdef);
 
             foreach (PawnKindDef pkd in from k in DefDatabase<PawnKindDef>.AllDefs

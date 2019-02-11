@@ -84,4 +84,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Specific Race Patch\" />
+  </ItemGroup>
 </Project>

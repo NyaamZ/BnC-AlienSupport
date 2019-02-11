@@ -5,4 +5,3 @@ C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC AlienSupport\Sou
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC-AlienSupport\Assemblies\BnCAlienSupport.dll
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC-AlienSupport\Source\RimWorld-Children\obj\Debug\BnC_AlienSupport.csproj.CoreCompileInputs.cache
 C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC-AlienSupport\Source\RimWorld-Children\obj\Debug\BnCAlienSupport.dll
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\BnC-AlienSupport\Source\RimWorld-Children\obj\Debug\BnC_AlienSupport.csprojAssemblyReference.cache
